@@ -1,0 +1,98 @@
+/* Global Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%; /* Ensure the body and HTML take up the full viewport */
+    width: 100%;
+    background-color: #252422; /* Dark background */
+    font-family: 'Fira Mono', monospace; /* Monospaced font for terminal */
+    font-size: 16px;
+    color: #CCC5B9; /* Light gray for text */
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+}
+
+/* Terminal Container */
+#terminal_container {
+    width: 100%; /* Slight padding from screen edges */
+    height: 100%;
+    background: linear-gradient(145deg, rgba(64, 61, 57, 0.6), rgba(37, 36, 34, 0.6)); /* Semi-transparent gradient */
+    border-radius: 12px; /* Rounded corners for a polished look */
+    border: 2px solid rgba(204, 197, 185, 0.3); /* Subtle semi-transparent border */
+    backdrop-filter: blur(10px); /* Glass effect with blur */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Depth and elevation */
+    padding: 20px;
+    box-sizing: content-box;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+}
+
+/* Input and Output Text */
+.command-input {
+    color: #EB5E28; /* Reddish orange for commands */
+}
+
+.command-output {
+    color: #FFFCF2; /* Ivory for normal output */
+}
+
+.error-message {
+    color: #EB5E28; /* Reddish orange for errors */
+}
+
+/* Scrollbar Styling */
+#terminal_container::-webkit-scrollbar {
+    width: 10px;
+}
+
+#terminal_container::-webkit-scrollbar-thumb {
+    background-color: rgba(204, 197, 185, 0.5); /* Transparent scrollbar */
+    border-radius: 10px;
+}
+
+/* Input Line Styling */
+#terminal_entry {
+    display: flex;
+    width: 100%
+    align-items: center;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    margin-top: 10px;
+    color: #EB5E28; /* Command prompt color */
+}
+
+#terminal_entry span {
+    margin-right: 5px;
+    animation: blink 1s steps(25, start) infinite;
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+
+#terminal_input {
+    flex: 1;
+    align-self: start;
+    margin-left: 4px;
+    background: none;
+    border: none;
+    outline: none;
+    color: #FFFCF2; /* Ivory for text */
+    font-family: inherit;
+    font-size: inherit;
+    caret-color: #EB5E28; /* Reddish-orange caret */
+}
+
+#output {
+  flex: 1;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
