@@ -1,0 +1,38 @@
+{
+  "site": {
+    "name": "antiyago",
+    "version": "0.0.1",
+    "author": "yago"
+  },
+  "content": [
+    {
+      "type": "directory",
+      "name": "home",
+      "children": [
+        {
+          "type": "directory",
+          "name": "photo_library",
+          "children": [
+            {
+              "type": "page",
+              "name": "Building",
+              "content": {
+                "title": "Reflections",
+                "description": "An exploration of nighttime photography.",
+                "media": ["R0000744.jpg"]
+              }
+            }
+          ]
+        },
+        {
+          "type": "page",
+          "name": "about",
+          "content": {
+            "title": "About Me",
+            "description": "This is a page about Santiago and his creative coding journey."
+          }
+        }
+      ]
+    }
+  ]
+}

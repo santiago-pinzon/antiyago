@@ -3,20 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terminal Portfolio</title>
+    <title>antiyago</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="public/antiyago.svg" type="image/x-icon">
 </head>
 <body>
     <!-- Terminal Container -->
     <div id="terminal_container">
-      <div id="output"></div>
+      <div id="output_box"></div>
+      <div id="status_bar"><span id="current_dir">~/antiyago/home</span> on 🦊 (v0.0.1)</div>
       <div id="terminal_entry">
         <span>&gt;</span> <!-- Prompt symbol -->
-        <input type="text" id="terminal_input" autofocus autocomplete="off">
+        <input type="text" id="terminal_input" placeholder="Type `help` to see available commands."autofocus autocomplete="off">
       </div>
     </div>
 
     <!-- Include JavaScript -->
-    <script src="index.js" defer></script>
+    <script src="src/index.js" defer></script>
 </body>
 </html>

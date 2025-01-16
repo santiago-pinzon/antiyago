@@ -17,26 +17,42 @@ body, html {
 #terminal_container {
     width: 100%; /* Slight padding from screen edges */
     height: 100%;
-    background: linear-gradient(145deg, rgba(64, 61, 57, 0.6), rgba(37, 36, 34, 0.6)); /* Semi-transparent gradient */
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.02) 50%, rgba(0, 0, 0, 0) 50%);
+    background-size: 100% 6px; /* Adjust height of scanlines */
     border-radius: 12px; /* Rounded corners for a polished look */
     border: 2px solid rgba(204, 197, 185, 0.3); /* Subtle semi-transparent border */
     backdrop-filter: blur(10px); /* Glass effect with blur */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Depth and elevation */
     padding: 20px;
+    padding-left: 20px;
     box-sizing: content-box;
     overflow-y: auto;
     white-space: pre-wrap;
     display: flex;
     flex-direction: column; /* Stack content vertically */
+    position: relative;
+    /* animation: scanlines-up 10s linear infinite; /* Apply the animation */ */
 }
 
+/* Animation Keyframes */
+@keyframes scanlines-up {
+    0% {
+        background-position: 0 100%; /* Start at the bottom */
+    }
+    100% {
+        background-position: 0 0%; /* End at the top */
+    }
+}
 /* Input and Output Text */
 .command-input {
     color: #EB5E28; /* Reddish orange for commands */
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 
 .command-output {
     color: #FFFCF2; /* Ivory for normal output */
+    font-size: 14px;
 }
 
 .error-message {
@@ -53,12 +69,21 @@ body, html {
     border-radius: 10px;
 }
 
+#status_bar {
+    color: #CCC5B9; /* Subtle gray for status text */
+    font-family: 'Fira Mono', monospace;
+    font-size: 14px; /* Slightly smaller than main terminal text */
+}
+
+#current_dir {
+  color: #CCC5b9;
+}
+
 /* Input Line Styling */
 #terminal_entry {
     display: flex;
     width: 100%
     align-items: center;
-    padding-left: 10px;
     padding-bottom: 10px;
     margin-top: 10px;
     color: #EB5E28; /* Command prompt color */
@@ -91,8 +116,14 @@ body, html {
     caret-color: #EB5E28; /* Reddish-orange caret */
 }
 
-#output {
-  flex: 1;
-  overflow-y: auto;
-  white-space: pre-wrap;
+#output_box {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    white-space: normal; /* Allow text to wrap */
+    word-wrap: break-word; /* Break long words onto the next line */
+    word-break: break-word;/* Ensure proper wrapping for long words */
+    align-content: flex-end;
+    font-size: 14px;
+    padding: 4px;
 }
