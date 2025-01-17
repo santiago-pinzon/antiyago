@@ -1,5 +1,5 @@
-import {loadContent} from "./DOMUtils.js";
-import {commandParser} from "./terminal.js"
+import {loadContent} from "../src/DOMUtils.js";
+import {commandParser} from "../src/terminal.js"
 
 const terminalContainer = document.getElementById('terminal_container');
 const output = document.getElementById('output_box');
