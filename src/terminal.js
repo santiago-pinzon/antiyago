@@ -93,7 +93,9 @@ function getFiles(args) {
   console.log(path);
   let dir = window.site_content['content'];
   for (const p of path) {
-    if (!Object.keys(dir).includes(p)) {
+    console.log(p);
+    console.log(dir);
+    if (!Object.keys(dir).includes(p)) { // Dir is a list of dicts need to account for that.
       ls_output.className = 'error-message';
       ls_output.textContent = 'Path is invalid please try again.';
       return ls_output;
