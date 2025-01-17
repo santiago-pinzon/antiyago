@@ -11,7 +11,7 @@ window.site_content = null;
 document.addEventListener("DOMContentLoaded", async () => {
     window.site_content = await loadContent();
     const userAgent = navigator.userAgent;
-    const site_home = prefix + window.site_content.content[0].name;
+    const site_home = prefix + window.site_content.content.home.name;
     window.currentDir = site_home;
     const site_version = window.site_content.site.version;
     setStatus(site_home, userAgent, site_version);

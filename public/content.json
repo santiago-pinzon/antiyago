@@ -4,16 +4,16 @@
     "version": "0.0.1",
     "author": "yago"
   },
-  "content": [
-    {
+  "content": {
+    "home": {
       "type": "directory",
       "name": "home",
-      "children": [
-        {
+      "children": {
+        "photo_library": {
           "type": "directory",
           "name": "photo_library",
-          "children": [
-            {
+          "children": {
+            "Building": {
               "type": "page",
               "name": "Building",
               "content": {
@@ -22,9 +22,9 @@
                 "media": ["R0000744.jpg"]
               }
             }
-          ]
+          }
         },
-        {
+        "about": {
           "type": "page",
           "name": "about",
           "content": {
@@ -32,31 +32,7 @@
             "description": "This is a page about Santiago and his creative coding journey."
           }
         },
-        {
-          "type": "page",
-          "name": "about1",
-          "content": {
-            "title": "About Me",
-            "description": "This is a page about Santiago and his creative coding journey."
-          }
-        },
-        {
-          "type": "page",
-          "name": "about1",
-          "content": {
-            "title": "About Me",
-            "description": "This is a page about Santiago and his creative coding journey."
-          }
-        },
-        {
-          "type": "page",
-          "name": "about1",
-          "content": {
-            "title": "About Me",
-            "description": "This is a page about Santiago and his creative coding journey."
-          }
-        },
-        {
+        "about1": {
           "type": "page",
           "name": "about1",
           "content": {
@@ -64,7 +40,7 @@
             "description": "This is a page about Santiago and his creative coding journey."
           }
         }
-      ]
+      }
     }
-  ]
+  }
 }

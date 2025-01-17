@@ -90,11 +90,8 @@ function getFiles(args) {
     path = path.slice(window.prefix.length);
   }
   path = path.trim().split('/');
-  console.log(path);
   let dir = window.site_content['content'];
   for (const p of path) {
-    console.log(p);
-    console.log(dir);
     if (!Object.keys(dir).includes(p)) { // Dir is a list of dicts need to account for that.
       ls_output.className = 'error-message';
       ls_output.textContent = 'Path is invalid please try again.';
@@ -102,7 +99,7 @@ function getFiles(args) {
     }
     dir = dir[p];
   }
-  for (const page of dir['children']) {
+  for (const page of Object.values(dir['children'])) {
     const file_span = document.createElement('span');
     file_span.textContent = page['name'];
     if (page['type'] == 'page') {
