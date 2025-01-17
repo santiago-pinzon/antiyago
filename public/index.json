@@ -31,6 +31,38 @@
             "title": "About Me",
             "description": "This is a page about Santiago and his creative coding journey."
           }
+        },
+        {
+          "type": "page",
+          "name": "about1",
+          "content": {
+            "title": "About Me",
+            "description": "This is a page about Santiago and his creative coding journey."
+          }
+        },
+        {
+          "type": "page",
+          "name": "about1",
+          "content": {
+            "title": "About Me",
+            "description": "This is a page about Santiago and his creative coding journey."
+          }
+        },
+        {
+          "type": "page",
+          "name": "about1",
+          "content": {
+            "title": "About Me",
+            "description": "This is a page about Santiago and his creative coding journey."
+          }
+        },
+        {
+          "type": "page",
+          "name": "about1",
+          "content": {
+            "title": "About Me",
+            "description": "This is a page about Santiago and his creative coding journey."
+          }
         }
       ]
     }

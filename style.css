@@ -43,20 +43,14 @@ body, html {
         background-position: 0 0%; /* End at the top */
     }
 }
-/* Input and Output Text */
-.command-input {
-    color: #EB5E28; /* Reddish orange for commands */
-    padding-top: 4px;
-    padding-bottom: 4px;
-}
 
-.command-output {
-    color: #FFFCF2; /* Ivory for normal output */
-    font-size: 14px;
-}
-
-.error-message {
-    color: #EB5E28; /* Reddish orange for errors */
+#user_entry {
+    display: flex;
+    flex-direction: column; /* Stack components vertically */
+    gap: 10px; /* Control spacing between children */
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-bottom: 20px;
 }
 
 /* Scrollbar Styling */
@@ -73,6 +67,7 @@ body, html {
     color: #CCC5B9; /* Subtle gray for status text */
     font-family: 'Fira Mono', monospace;
     font-size: 14px; /* Slightly smaller than main terminal text */
+    margin: 0;
 }
 
 #current_dir {
@@ -84,9 +79,8 @@ body, html {
     display: flex;
     width: 100%
     align-items: center;
-    padding-bottom: 10px;
-    margin-top: 10px;
     color: #EB5E28; /* Command prompt color */
+    margin: 0;
 }
 
 #terminal_entry span {
@@ -125,5 +119,57 @@ body, html {
     word-break: break-word;/* Ensure proper wrapping for long words */
     align-content: flex-end;
     font-size: 14px;
-    padding: 4px;
+    padding-left: 10px;
+}
+
+.ls-grid {
+    display: grid;
+    gap: 10px; /* Space between items */
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    padding: 10px; /* Optional: Add some padding */
+}
+
+.ls-page { /* Optional styling */
+    color: #fffcf2;           /* Text color */
+    padding: 5px;
+    text-align: left;
+    overflow-wrap: break-word; /* Handle long filenames */
+}
+
+.ls-dir { /* Optional styling */
+    color: #fffcf2;           /* Text color */
+    padding: 5px;
+    text-align: left;
+    overflow-wrap: break-word; /* Handle long filenames */
+}
+
+.output {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+/* Input and Output Text */
+.command-input {
+    color: #EB5E28; /* Reddish orange for commands */
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.command-output {
+    color: #FFFCF2; /* Ivory for normal output */
+    font-size: 14px;
+}
+
+.error-message {
+    color: #EB5E28; /* Reddish orange for errors */
+}
+
+.help-statement {
+  color: #EB5E28;
+  padding-bottom: 4px;
+}
+
+.help-statement::before {
+  color: #CCC5B9;
+  content: "Available commands: "
 }

@@ -11,14 +11,16 @@
     <!-- Terminal Container -->
     <div id="terminal_container">
       <div id="output_box"></div>
+      <div id='user_entry'>
       <div id="status_bar"><span id="current_dir">~/antiyago/home</span> on 🦊 (v0.0.1)</div>
-      <div id="terminal_entry">
-        <span>&gt;</span> <!-- Prompt symbol -->
-        <input type="text" id="terminal_input" placeholder="Type `help` to see available commands."autofocus autocomplete="off">
+        <div id="terminal_entry">
+          <span>&gt;</span> <!-- Prompt symbol -->
+          <input type="text" id="terminal_input" placeholder="Type `help` to see available commands."autofocus autocomplete="off">
+        </div>
       </div>
     </div>
 
     <!-- Include JavaScript -->
-    <script src="src/index.js" defer></script>
+    <script type="module" src="src/index.js" defer></script>
 </body>
 </html>

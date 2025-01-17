@@ -1,29 +1,26 @@
+import {loadContent} from "./DOMUtils.js";
+import {commandParser} from "./terminal.js"
+
 const terminalContainer = document.getElementById('terminal_container');
 const output = document.getElementById('output_box');
 const inputField = document.getElementById('terminal_input');
-const currentDir = "~/home/antiyago";
-let site_content = null;
+window.currentDir = "";
+window.prefix = "~/antiyago/"
+window.site_content = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
-    await loadContent();
+    window.site_content = await loadContent();
     const userAgent = navigator.userAgent;
-    const site_home = "~/antiyago/" + site_content.content[0].name;
-    const site_version = site_content.site.version;
+    const site_home = prefix + window.site_content.content[0].name;
+    window.currentDir = site_home;
+    const site_version = window.site_content.site.version;
     setStatus(site_home, userAgent, site_version);
 })
-
-async function loadContent() {
-    const response = await fetch('public/index.json'); // Adjust the path if necessary
-    const content = await response.json();
-    site_content = content;
-}
 
 function setStatus(dir, browser, version) {
     const statusDiv = document.getElementById('status_bar');
     const dirSpan = statusDiv.firstElementChild;
     dirSpan.textContent = dir;
-
-    console.log(browser);
 
     const browserIcon = getBrowserIcon(browser);
     const versionText = '(v' + version + ')';
@@ -46,26 +43,25 @@ function getBrowserIcon(browser) {
 }
 
 function updateOutput(command) {
-    const outputLine = document.createElement('div');
-    outputLine.className = 'output';
+    const resultLine = commandParser(command);
+    if (resultLine != '') {
 
-    // Status
-    const dirDiv = document.getElementById('status_bar').cloneNode(true);
-    outputLine.appendChild(dirDiv);
+      const outputLine = document.createElement('div');
+      outputLine.className = 'output';
 
-    // Entered Command
-    const commandLine = document.createElement('div');
-    commandLine.textContent = `> ${command}`;
-    commandLine.className = 'command-input';
-    outputLine.appendChild(commandLine);
+      // Status
+      const dirDiv = document.getElementById('status_bar').cloneNode(true);
+      outputLine.appendChild(dirDiv);
 
-    // Result of the command
-    const resultLine = document.createElement('div');
-    resultLine.textContent = commandParser(command, commands);
-    resultLine.className = 'command-output';
-    outputLine.appendChild(resultLine);
+      // Entered Command
+      const commandLine = document.createElement('div');
+      commandLine.textContent = `> ${command}`;
+      commandLine.className = 'command-input';
 
-    output.appendChild(outputLine);
+      outputLine.appendChild(commandLine);
+      outputLine.appendChild(resultLine);
+      output.appendChild(outputLine);
+    }
     terminalContainer.scrollTop = terminalContainer.scrollHeight;
 }
 
@@ -79,29 +75,3 @@ inputField.addEventListener('keydown', (event) => {
         inputField.value = ''; // Clear the input field
     }
 });
-
-const commands = {
-    echo: (args) => args.join(' '),
-    help: () => "Available commands: echo, help, clear, ls, cd",
-    clear: () => {
-        document.getElementById('output').innerHTML = ''; // Clear terminal output
-        return '';
-    },
-    ls: () => "file1.txt  file2.txt  directory/",
-    cd: (args) => {
-        if (!args.length) return "cd: missing argument";
-        return `Changed directory to ${args[0]}`;
-    },
-};
-
-const commandParser = (input, commands) => {
-    const parts = input.trim().split(/\s+/); // Split input into command and args
-    const command = parts[0]; // First word is the command
-    const args = parts.slice(1); // Remaining parts are the arguments
-
-    if (commands[command]) {
-        return commands[command](args); // Execute the command
-    } else {
-        return `Command not found: ${command}`; // Handle unknown commands
-    }
-};
