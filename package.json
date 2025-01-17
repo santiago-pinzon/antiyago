@@ -2,7 +2,7 @@
   "name": "antiyago",
   "version": "0.0.1",
   "description": "My up and coming portfolio website",
-  "main": "index.js",
+  "main": "index.html",
   "repository": "git@github.com:santiago-pinzon/antiyago.git",
   "author": "Santiago Pinzon <38019518+santiago-pinzon@users.noreply.github.com>",
   "license": "MIT"
