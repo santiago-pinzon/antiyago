@@ -6,10 +6,7 @@ const commands = {
         return '';
     }, help: "Clears the console."},
     ls: {fn: (args) => getFiles(args), help: "List the available directories. Usage: ls [dir]"},
-    cd: {fn: (args) => {
-        if (!args.length) return "cd: missing argument";
-        return `Changed directory to ${args[0]}`;
-    }, help: "Move to a different directory. Usage: cd [path/to/dir]"}
+    cd: {fn: (args) => getCD(args), help: "Move to a different directory. Usage: cd [path/to/dir]"}
 };
 
 export function commandParser (input) {
@@ -77,6 +74,57 @@ function getHelp(args) {
     return help_output;
 }
 
+function getCD(args) {
+  // Change the Directory
+  const cd_output = document.createElement('div');
+  if (args.length > 1) {
+    cd_output.className = 'error-message';
+    cd_output.textContent = 'Too many arguments provided please try again.';
+    return ls_output;
+  }
+  if (args.length < 1) {
+    cd_output.className = "error-message";
+    cd_output.textContent = "Please provide a path.";
+    return cd_output;
+  }
+
+  let dir = getDir(args[0]);
+
+  if (dir == null) {
+    cd_output.className = "error-message";
+    cd_output.textContent = "Path is invalid, please try again.";
+    return cd_output;
+  }
+  window.currentDir = dir['path'];
+  cd_output.className = "output";
+  cd_output.textContent = `Changed dir to ${args[0]}`;
+  return cd_output;
+}
+
+function getDir(path=window.currentDir) {
+  // First we need to determine if relative or absolute
+  if (!path.startsWith('/') && !path.startsWith('~/')) {
+    // relative
+    path = window.currentDir + "/" + path;
+  }
+
+  path = path.split("/").filter(part => part !== "");
+
+  // Now we nagivate through our Directory
+  let dir = window.site_content.content;
+  for (const element of path) {
+    try {
+      dir = dir[element]['children'];
+    }
+    catch {
+      return null;
+    }
+  }
+  return {"path": '/' + path.join('/'),
+          "dir": dir};
+
+}
+
 function getFiles(args) {
   const ls_output = document.createElement('div');
   ls_output.className = 'ls-grid';
@@ -86,20 +134,17 @@ function getFiles(args) {
     return ls_output;
   }
   let path = (args[0] ?? window.currentDir)
-  if (path.startsWith(window.prefix)) {
-    path = path.slice(window.prefix.length);
+
+  let dir = getDir(path);
+
+  if (dir == null) {
+    ls_output.className = "error-message";
+    ls_output.textContent = "Path is invalid, please try again.";
+    return ls_output;
   }
-  path = path.trim().split('/');
-  let dir = window.site_content['content'];
-  for (const p of path) {
-    if (!Object.keys(dir).includes(p)) { // Dir is a list of dicts need to account for that.
-      ls_output.className = 'error-message';
-      ls_output.textContent = 'Path is invalid please try again.';
-      return ls_output;
-    }
-    dir = dir[p];
-  }
-  for (const page of Object.values(dir['children'])) {
+  console.log(dir);
+
+  for (const page of Object.values(dir['dir'])) {
     const file_span = document.createElement('span');
     file_span.textContent = page['name'];
     if (page['type'] == 'page') {

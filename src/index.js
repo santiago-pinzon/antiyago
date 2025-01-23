@@ -11,7 +11,7 @@ window.site_content = null;
 document.addEventListener("DOMContentLoaded", async () => {
     window.site_content = await loadContent();
     const userAgent = navigator.userAgent;
-    const site_home = prefix + window.site_content.content.home.name;
+    const site_home = "/antiyago/home";
     window.currentDir = site_home;
     const site_version = window.site_content.site.version;
     setStatus(site_home, userAgent, site_version);
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 function setStatus(dir, browser, version) {
     const statusDiv = document.getElementById('status_bar');
     const dirSpan = statusDiv.firstElementChild;
-    dirSpan.textContent = dir;
+    dirSpan.textContent = "~" + dir;
 
     const browserIcon = getBrowserIcon(browser);
     const versionText = '(v' + version + ')';
@@ -51,7 +51,12 @@ function updateOutput(command) {
 
       // Status
       const dirDiv = document.getElementById('status_bar').cloneNode(true);
+      dirDiv.id = '';
       outputLine.appendChild(dirDiv);
+
+      const userAgent = navigator.userAgent;
+      const site_version = window.site_content.site.version;
+      setStatus(window.currentDir, userAgent, site_version);
 
       // Entered Command
       const commandLine = document.createElement('div');

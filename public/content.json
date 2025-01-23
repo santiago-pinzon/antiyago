@@ -5,41 +5,47 @@
     "author": "yago"
   },
   "content": {
-    "home": {
+    "antiyago": {
       "type": "directory",
-      "name": "home",
+      "name": "antiyago",
       "children": {
-        "photo_library": {
-          "type": "directory",
-          "name": "photo_library",
-          "children": {
-            "Building": {
-              "type": "page",
-              "name": "Building",
-              "content": {
-                "title": "Reflections",
-                "description": "An exploration of nighttime photography.",
-                "media": ["R0000744.jpg"]
+        "home": {
+        "type": "directory",
+        "name": "home",
+        "children": {
+          "photo_library": {
+            "type": "directory",
+            "name": "photo_library",
+            "children": {
+              "Building": {
+                "type": "page",
+                "name": "Building",
+                "content": {
+                  "title": "Reflections",
+                  "description": "An exploration of nighttime photography.",
+                  "media": ["R0000744.jpg"]
+                }
               }
             }
-          }
-        },
-        "about": {
-          "type": "page",
-          "name": "about",
-          "content": {
-            "title": "About Me",
-            "description": "This is a page about Santiago and his creative coding journey."
-          }
-        },
-        "about1": {
-          "type": "page",
-          "name": "about1",
-          "content": {
-            "title": "About Me",
-            "description": "This is a page about Santiago and his creative coding journey."
+          },
+          "about": {
+            "type": "page",
+            "name": "about",
+            "content": {
+              "title": "About Me",
+              "description": "This is a page about Santiago and his creative coding journey."
+            }
+          },
+          "about1": {
+            "type": "page",
+            "name": "about1",
+            "content": {
+              "title": "About Me",
+              "description": "This is a page about Santiago and his creative coding journey."
+            }
           }
         }
+      }
       }
     }
   }
