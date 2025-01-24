@@ -88,23 +88,19 @@ inputField.addEventListener('keydown', (event) => {
         inputField.value = ''; // Clear the input field
     }
     if (event.key === 'ArrowUp') {
-      console.log('up');
       event.preventDefault();
       let command = commands.previousCommand();
       if (command != null) {
         inputField.focus();
         inputField.value = command;
-        // inputField.setSelectionRange(inputField.value.length, inputField.value.length);
       }
     }
     if (event.key === 'ArrowDown') {
-      console.log('down');
       event.preventDefault();
       let command = commands.nextCommand();
       if (command != null) {
         inputField.focus();
         inputField.value = command;
-        // inputField.setSelectionRange(inputField.value.length, inputField.value.length);
       }
     }
 });

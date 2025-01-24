@@ -145,7 +145,6 @@ function getCD(args) {
   }
 
   let dir = getDir(args[0]);
-  console.log(dir);
 
   if (dir == null) {
     cd_output.className = "error-message";
@@ -169,15 +168,28 @@ function getDir(path=window.currentDir) {
 
   // Now we nagivate through our Directory
   let dir = window.site_content.content;
+  let visited = [];
+  let new_path = []
   for (const element of path) {
     try {
-      dir = dir[element]['children'];
+      if (element === '.') {
+        continue;
+      }
+      else if (element === '..') {
+        dir = visited.pop();
+        new_path.pop();
+      }
+      else {
+        visited.push(dir);
+        new_path.push(element);
+        dir = dir[element]['children'];
+      }
     }
     catch {
       return null;
     }
   }
-  return {"path": '/' + path.join('/'),
+  return {"path": '/' + new_path.filter(part => !['..','.'].includes(part)).join('/'),
           "dir": dir};
 
 }
