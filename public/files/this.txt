@@ -1,0 +1,3 @@
+I wrote this website as an experiment to see just how far I could take a concept. I wanted to build a website that mimicked a unix-termina and serve as my personal portfolio. Everything is written from scratch in pure HTML, CSS, and Javascript. The only notable exception is rendering Mardown text as HTML.
+Things are far from perfect and it is still a work in progress, but improvements will come as soon and often as I am able to dream them up.
+Please enjoy my cumbersome, eclectic, and largely impractical website.

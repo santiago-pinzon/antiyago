@@ -1,0 +1,43 @@
+{
+  "site": {
+    "name": "antiyago",
+    "version": "0.1.0",
+    "author": "yago"
+  },
+  "content": {
+    "antiyago": {
+      "type": "directory",
+      "name": "antiyago",
+      "children": {
+        "home": {
+        "type": "directory",
+        "name": "home",
+        "children": {
+          "README.md": {
+            "type": "page",
+            "name": "README.md"
+          },
+          "Resume.md": {
+            "type": "page",
+            "name": "Resume.md"
+          },
+          "about": {
+            "type": "directory",
+            "name": "about",
+            "children": {
+              "this.txt": {
+                "type": "page",
+                "name": "this.txt"
+              },
+              "me.txt": {
+                "type": "page",
+                "name": "me.txt"
+              }
+            }
+          }
+        }
+      }
+      }
+    }
+  }
+}

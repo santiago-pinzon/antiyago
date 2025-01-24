@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>antiyago</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="public/antiyago.svg" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Terminal Container -->
+    <div id="overlay_container">
+        <span id="overlay_text"></span>
+    </div>
+
+    <div id="terminal_container">
+      <div id="output_box"></div>
+      <div id='user_entry'>
+      <div id="status_bar"><span id="current_dir">~/antiyago/home</span> on 🦊 (v0.0.1)</div>
+        <div id="terminal_entry">
+          <span>&gt;</span> <!-- Prompt symbol -->
+          <input type="text" id="terminal_input"
+          placeholder="Type `help` to see available commands."
+          autofocus autocomplete="off">
+        </div>
+      </div>
+    </div>
+
+    <!-- Include JavaScript -->
+    <script type="module" src="src/index.js" defer></script>
+</body>
+</html>
