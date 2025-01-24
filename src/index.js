@@ -1,5 +1,5 @@
 import {loadContent} from "./DOMUtils.js";
-import {commandParser} from "./terminal.js"
+import {commandParser, themes} from "./terminal.js"
 import {CommandHistory} from "./CommandHistory.js"
 import {showOverlay} from "./WelcomeAnimation.js"
 
@@ -8,7 +8,7 @@ const output = document.getElementById('output_box');
 const inputField = document.getElementById('terminal_input');
 const commands = new CommandHistory(20);
 window.currentDir = "";
-window.prefix = "~/antiyago/"
+window.prefix = "~/antiyago/";
 window.site_content = null;
 
 window.addEventListener('load', showOverlay);
@@ -20,6 +20,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.currentDir = site_home;
     const site_version = window.site_content.site.version;
     setStatus(site_home, userAgent, site_version);
+    const savedTheme = localStorage.getItem("theme") || "dark";
+    document.getElementById("themeStylesheet").setAttribute("href", themes[savedTheme]);
 })
 
 function setStatus(dir, browser, version) {
