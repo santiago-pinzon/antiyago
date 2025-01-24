@@ -1,7 +1,7 @@
 {
   "site": {
     "name": "antiyago",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "author": "yago"
   },
   "content": {
@@ -13,35 +13,26 @@
         "type": "directory",
         "name": "home",
         "children": {
-          "photo_library": {
-            "type": "directory",
-            "name": "photo_library",
-            "children": {
-              "Building": {
-                "type": "page",
-                "name": "Building",
-                "content": {
-                  "title": "Reflections",
-                  "description": "An exploration of nighttime photography.",
-                  "media": ["R0000744.jpg"]
-                }
-              }
-            }
+          "README.md": {
+            "type": "page",
+            "name": "README.md"
+          },
+          "Resume.md": {
+            "type": "page",
+            "name": "Resume.md"
           },
           "about": {
-            "type": "page",
+            "type": "directory",
             "name": "about",
-            "content": {
-              "title": "About Me",
-              "description": "This is a page about Santiago and his creative coding journey."
-            }
-          },
-          "about1": {
-            "type": "page",
-            "name": "about1",
-            "content": {
-              "title": "About Me",
-              "description": "This is a page about Santiago and his creative coding journey."
+            "children": {
+              "this.txt": {
+                "type": "page",
+                "name": "this.txt"
+              },
+              "me.txt": {
+                "type": "page",
+                "name": "me.txt"
+              }
             }
           }
         }

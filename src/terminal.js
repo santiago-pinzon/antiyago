@@ -1,3 +1,5 @@
+import { marked } from 'marked';
+
 const commands = {
     echo: {fn: (args) => getEcho(args), help: "Print out text to the console. Usage: echo [text]"}, // TODO add html sanitization.https://github.com/cure53/DOMPurify
     help: {fn: (args) => getHelp(args), help: "Get help on commands. Usage: help [command]"},
@@ -6,7 +8,8 @@ const commands = {
         return '';
     }, help: "Clears the console."},
     ls: {fn: (args) => getFiles(args), help: "List the available directories. Usage: ls [dir]"},
-    cd: {fn: (args) => getCD(args), help: "Move to a different directory. Usage: cd [path/to/dir]"}
+    cd: {fn: (args) => getCD(args), help: "Move to a different directory. Usage: cd [path/to/dir]"},
+    cat: {fn: (args) => getCat(args), help: "Display the contents of a file. Usage: cat [path/to/file]"}
 };
 
 export function commandParser (input) {
@@ -23,6 +26,59 @@ export function commandParser (input) {
         return output_div;
     }
 };
+
+function getCat(args) {
+  // Returns the content of a file (page)
+  const cat_output = document.createElement('div');
+
+  // Validate our arguments (should probably break out into a wrapper eventually.)
+  if (args.length > 1) {
+    cat_output.className = 'error-message';
+    cat_output.textContent = 'Too many arguments provided please try again.';
+    return cat_output;
+  }
+  if (args.length < 1) {
+    cat_output.className = "error-message";
+    cat_output.textContent = "Please provide a path.";
+    return cat_output;
+  }
+
+  // parse our path
+  let path = args[0].split('/')
+  let file = path.pop()
+
+  // Navigate to the resulting dir.
+  let dir = getDir(path.join('/') ?? window.currentDir);
+  if (dir == null) {
+    cat_output.className = "error-message";
+    cat_output.textContent = "Invalid path given please try again.";
+    return cat_output;
+  }
+
+  fetch(`files/${file}`) // Path to your .md or .txt file
+    .then(response => {
+      if (!response.ok || response.headers.get('Content-Type') == 'text/html') {
+          throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.text(); // Convert response to text
+    })
+    .then(data => {
+      // Display the file content in an element
+      if (file.endsWith('.txt')) {
+        cat_output.innerText = data;
+      }
+      else if (file.endsWith('.md')) {
+        cat_output.innerHTML = marked(data);
+      }
+    })
+    .catch(error => {
+      cat_output.className = "error-message";
+      cat_output.textContent = "File not found please try again.";
+      return cat_output;
+    });
+
+  return cat_output;
+}
 
 function getEcho(args) {
     const echoOutput = document.createElement('div');
@@ -89,6 +145,7 @@ function getCD(args) {
   }
 
   let dir = getDir(args[0]);
+  console.log(dir);
 
   if (dir == null) {
     cd_output.className = "error-message";
@@ -142,7 +199,6 @@ function getFiles(args) {
     ls_output.textContent = "Path is invalid, please try again.";
     return ls_output;
   }
-  console.log(dir);
 
   for (const page of Object.values(dir['dir'])) {
     const file_span = document.createElement('span');
