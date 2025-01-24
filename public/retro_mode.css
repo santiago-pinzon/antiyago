@@ -1,0 +1,246 @@
+/* Global Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%; /* Full viewport */
+    width: 100%;
+    background-color: #000000; /* Pure black background */
+    font-family: 'Courier New', Courier, monospace; /* Classic monospaced font */
+    font-size: 16px; /* Adjust size for readability */
+    color: #00FF00; /* Bright green text for the retro feel */
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    line-height: 1.6;
+    cursor: default; /* No pointer to simulate old terminals */
+    transition: background-color 0.5s, color 0.5s;
+}
+
+a {
+    color: #00FF00; /* Green links */
+    text-decoration: none; /* No underline */
+    border-bottom: 1px dashed #00FF00; /* Dashed underline for emphasis */
+}
+
+a:hover {
+    color: #00AA00; /* Slightly darker green on hover */
+    border-bottom: 1px solid #00AA00; /* Solid underline on hover */
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+    color: #00FF00; /* Green text */
+    margin: 0.5em 0; /* Minimal spacing */
+    text-transform: uppercase; /* Old-school look */
+}
+
+/* Terminal Container */
+#terminal_container {
+    position: relative;
+    width: 100%;
+    height: 95%;
+    border-radius: 0; /* No rounded edges */
+    border: 2px solid #00FF00; /* Green border for the terminal window */
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    box-shadow: none; /* No shadow for simplicity */
+
+}
+
+#terminal_container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 255, 0, 0.05), /* Faint green line */
+        rgba(0, 255, 0, 0.05) 1px, /* Line thickness */
+        rgba(0, 0, 0, 0) 2px /* Transparent gap */
+    );
+    background-size: 100% 3px; /* Spacing between lines */
+    animation: scanlines-up 5s linear infinite;
+    z-index: 1; /* Ensure it appears above the background */
+    pointer-events: none; /* Prevent interaction */
+}
+
+#terminal_container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        90deg,
+        rgba(0, 255, 0, 0.03), /* Faint horizontal green line */
+        rgba(0, 255, 0, 0.03) 1px, /* Line thickness */
+        rgba(0, 0, 0, 0) 3px /* Transparent gap */
+    );
+    background-size: 3px 100%; /* Spacing between lines */
+    animation: scanlines-across 10s linear infinite;
+    z-index: 2; /* Ensure it appears above ::before */
+    pointer-events: none;
+}
+
+/* Vertical Animation */
+@keyframes scanlines-up {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 0 100%;
+    }
+}
+
+/* Horizontal Animation */
+@keyframes scanlines-across {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 100% 0;
+    }
+}
+
+
+#overlay_container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10000; /* Above all */
+    color: #00FF00; /* Green text */
+    padding: 40px 40px;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 2.5rem;
+    white-space: nowrap;
+    display: none;
+}
+
+#overlay_text::after {
+    content: '|';
+    display: inline-block;
+    animation: blink 0.7s step-end infinite;
+}
+
+/* Blinking Cursor */
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Input Line Styling */
+#terminal_entry {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    color: #00FF00; /* Command prompt green */
+    margin: 0;
+}
+
+#terminal_entry span {
+    margin-right: 5px;
+    animation: blink 1s steps(25, start) infinite; /* Blinking cursor */
+}
+
+#terminal_input {
+    flex: 1;
+    align-self: start;
+    margin-left: 4px;
+    background: none;
+    border: none;
+    outline: none;
+    color: #00FF00; /* Green text input */
+    font-family: inherit;
+    font-size: inherit;
+    caret-color: #00FF00; /* Green caret */
+    z-index: 10;
+}
+
+#output_box {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    white-space: pre-wrap; /* Mimic terminal line wrapping */
+    word-wrap: break-word; /* Wrap long words */
+    color: #00FF00; /* Green for output */
+    font-size: 14px;
+    padding-left: 10px;
+    z-index: 10;
+}
+
+/* Scrollbar Styling */
+#terminal_container::-webkit-scrollbar {
+    width: 8px;
+}
+
+#terminal_container::-webkit-scrollbar-thumb {
+    background-color: #004400; /* Dark green scrollbar */
+    border-radius: 10px;
+}
+
+/* Status Bar */
+.status_bar {
+    color: #00AA00; /* Dimmer green for status text */
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    margin: 0;
+    padding-top: 5px;
+}
+
+/* Output and Errors */
+.command-output {
+    color: #00FF00; /* Bright green for output */
+    font-size: 14px;
+}
+
+.error-message {
+    color: #FF0000; /* Red for errors */
+}
+
+.help-statement {
+    color: #00FF00; /* Green for help */
+    padding-bottom: 4px;
+}
+
+.help-statement::before {
+    color: #00AA00; /* Dim green for prefix */
+    content: "Available commands: ";
+}
+
+/* Retro Grid for "ls" Command */
+.ls-grid {
+    display: grid;
+    gap: 5px;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    padding: 10px;
+}
+
+.ls-page, .ls-dir {
+    color: #00FF00; /* Bright green text */
+    padding: 5px;
+    overflow-wrap: break-word;
+}
+
+.ls-page::before {
+    content: '\F0224 '; /* Unicode for the MDI icon */
+    font-family: 'Material Design Icons';
+    color: #00FF00; /* Green icon */
+    margin-right: 8px;
+    display: inline-block;
+}
+
+.ls-dir::before {
+    content: '\F0256 '; /* Unicode for the MDI icon */
+    font-family: 'Material Design Icons';
+    color: #00FF00; /* Green icon */
+    margin-right: 8px;
+    display: inline-block;
+}

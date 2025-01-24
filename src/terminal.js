@@ -9,8 +9,15 @@ const commands = {
     }, help: "Clears the console."},
     ls: {fn: (args) => getFiles(args), help: "List the available directories. Usage: ls [dir]"},
     cd: {fn: (args) => getCD(args), help: "Move to a different directory. Usage: cd [path/to/dir]"},
-    cat: {fn: (args) => getCat(args), help: "Display the contents of a file. Usage: cat [path/to/file]"}
+    cat: {fn: (args) => getCat(args), help: "Display the contents of a file. Usage: cat [path/to/file]"},
+    theme: {fn: (args) => changeTheme(args), help: "Change the display theme. Usage: theme [dark, lite, retro]"}
 };
+
+export const themes = {
+  lite: "lite_mode.css",
+  dark: "dark_mode.css",
+  retro: "retro_mode.css"
+}
 
 export function commandParser (input) {
     const parts = input.trim().split(/\s+/); // Split input into command and args
@@ -26,6 +33,31 @@ export function commandParser (input) {
         return output_div;
     }
 };
+
+function changeTheme(args) {
+  const theme_output = document.createElement('div');
+  // Validate our arguments (should probably break out into a wrapper eventually.)
+  if (args.length > 1) {
+    theme_output.className = 'error-message';
+    theme_output.textContent = 'Too many arguments provided please try again.';
+    return theme_output;
+  }
+  if ((args.length < 1) || (!Object.keys(themes).includes(args[0]))) {
+    theme_output.className = "error-message";
+    theme_output.textContent = `Please provide a valid theme. Valid options are {${Object.keys(themes).join(', ')}}`;
+    return theme_output;
+  }
+  if (localStorage.getItem("theme") === args[0]) {
+    theme_output.className = "error-message";
+    theme_output.textContent = `Theme ${args[0]} is already active.`;
+    return theme_output;
+  }
+  document.getElementById("themeStylesheet").setAttribute("href", themes[args[0]]);
+  localStorage.setItem("theme", args[0]);
+  theme_output.className = "output";
+  theme_output.textContent = `Theme has been updated to ${args[0]}`;
+  return theme_output;
+}
 
 function getCat(args) {
   // Returns the content of a file (page)
@@ -145,7 +177,6 @@ function getCD(args) {
   }
 
   let dir = getDir(args[0]);
-  console.log(dir);
 
   if (dir == null) {
     cd_output.className = "error-message";
@@ -169,15 +200,28 @@ function getDir(path=window.currentDir) {
 
   // Now we nagivate through our Directory
   let dir = window.site_content.content;
+  let visited = [];
+  let new_path = []
   for (const element of path) {
     try {
-      dir = dir[element]['children'];
+      if (element === '.') {
+        continue;
+      }
+      else if (element === '..') {
+        dir = visited.pop();
+        new_path.pop();
+      }
+      else {
+        visited.push(dir);
+        new_path.push(element);
+        dir = dir[element]['children'];
+      }
     }
     catch {
       return null;
     }
   }
-  return {"path": '/' + path.join('/'),
+  return {"path": '/' + new_path.filter(part => !['..','.'].includes(part)).join('/'),
           "dir": dir};
 
 }

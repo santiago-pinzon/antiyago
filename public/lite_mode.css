@@ -1,0 +1,249 @@
+/* Global Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%; /* Ensure the body and HTML take up the full viewport */
+    width: 100%;
+    background-color: #F8F8F8; /* Light background */
+    font-family: 'Fira Mono', monospace; /* Monospaced font for terminal */
+    font-size: 16px;
+    color: #2E2E2E; /* Dark gray for text */
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    transition: background-color 0.5s, color 0.5s;
+}
+
+a {
+  color: #E63946; /* Vibrant red for links */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #E63946; /* Accent color for headers */
+}
+
+/* Terminal Container */
+#terminal_container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    border: 2px solid rgba(46, 46, 46, 0.2); /* Lighter border */
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+#terminal_container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.02) 50%, rgba(255, 255, 255, 0) 50%);
+    background-size: 100% 9px;
+    animation: scanlines-up 10s linear infinite;
+    z-index: 1;
+}
+
+#terminal_container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(46, 46, 46, 0.02) 50%, rgba(255, 255, 255, 0) 50%);
+    background-size: 144px 100%;
+    animation: scanlines-across 20s linear infinite;
+    z-index: 2;
+}
+
+/* Vertical Animation */
+@keyframes scanlines-up {
+    0% {
+        background-position: 0 0; /* Only move first layer */
+    }
+    100% {
+        background-position: 0 100%; /* Keep second layer static */
+    }
+}
+
+@keyframes scanlines-across {
+    0% {
+        background-position: 0 0; /* Only move second layer */
+    }
+    100% {
+        background-position: 100% 0; /* Keep first layer static */
+    }
+}
+
+#overlay_container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -75%);
+    z-index: 10000; /* Higher than #terminal_container */
+    color: #2E2E2E; /* Dark text for contrast */
+    padding: 20px 40px;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 2.5rem;
+    white-space: nowrap;
+    display: none;
+}
+
+#overlay_text::after {
+    content: '|';
+    display: inline-block;
+    animation: blink 0.7s step-end infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+#user_entry {
+    display: flex;
+    flex-direction: column; /* Stack components vertically */
+    gap: 10px; /* Control spacing between children */
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-bottom: 20px;
+}
+
+/* Scrollbar Styling */
+#terminal_container::-webkit-scrollbar {
+    width: 10px;
+}
+
+#terminal_container::-webkit-scrollbar-thumb {
+    background-color: rgba(46, 46, 46, 0.2); /* Light scrollbar */
+    border-radius: 10px;
+}
+
+#current_dir {
+  color: #2E2E2E;
+}
+
+/* Input Line Styling */
+#terminal_entry {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    color: #E63946; /* Command prompt color */
+    margin: 0;
+}
+
+#terminal_entry span {
+    margin-right: 5px;
+    animation: blink 1s steps(25, start) infinite;
+}
+
+#terminal_input {
+    flex: 1;
+    align-self: start;
+    margin-left: 4px;
+    background: none;
+    border: none;
+    outline: none;
+    color: #1D3557; /* Dark blue for input text */
+    font-family: inherit;
+    font-size: inherit;
+    caret-color: #E63946; /* Red caret */
+    z-index: 10;
+}
+
+#output_box {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    white-space: normal; /* Allow text to wrap */
+    word-wrap: break-word; /* Break long words onto the next line */
+    word-break: break-word;/* Ensure proper wrapping for long words */
+    align-content: flex-end;
+    font-size: 14px;
+    padding-left: 10px;
+    z-index: 10;
+}
+
+.status_bar {
+    color: #2E2E2E; /* Dark gray for status text */
+    font-family: 'Fira Mono', monospace;
+    font-size: 14px; /* Slightly smaller than main terminal text */
+    margin: 0;
+}
+
+.ls-grid {
+    display: grid;
+    gap: 10px; /* Space between items */
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    padding: 10px; /* Optional: Add some padding */
+}
+
+.ls-page { /* Optional styling */
+    color: #1D3557;           /* Text color */
+    padding: 5px;
+    text-align: left;
+    overflow-wrap: break-word; /* Handle long filenames */
+}
+
+.ls-page::before {
+    content: '\F0224 ';         /* Unicode for the MDI icon */
+    font-family: 'Material Design Icons'; /* MDI font family */
+    color: #457B9D;           /* Icon color */
+    margin-right: 8px;        /* Space between icon and text */
+    display: inline-block;    /* Ensures proper spacing and alignment */
+}
+
+.ls-dir { /* Optional styling */
+    color: #1D3557;           /* Text color */
+    padding: 5px;
+    text-align: left;
+    overflow-wrap: break-word; /* Handle long filenames */
+}
+
+.ls-dir::before {
+    content: '\F0256 ';         /* Unicode for the MDI icon */
+    font-family: 'Material Design Icons'; /* MDI font family */
+    color: #457B9D;           /* Icon color */
+    margin-right: 8px;        /* Space between icon and text */
+    display: inline-block;    /* Ensures proper spacing and alignment */
+}
+
+.output {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+/* Input and Output Text */
+.command-input {
+    color: #E63946; /* Vibrant red for commands */
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.command-output {
+    color: #1D3557; /* Dark blue for normal output */
+    font-size: 14px;
+}
+
+.error-message {
+    color: #E63946; /* Vibrant red for errors */
+}
+
+.help-statement {
+  color: #E63946;
+  padding-bottom: 4px;
+}
+
+.help-statement::before {
+  color: #2E2E2E;
+  content: "Available commands: "
+}

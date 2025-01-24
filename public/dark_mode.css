@@ -11,6 +11,7 @@ body, html {
     display: flex;
     justify-content: space-between;
     align-items: end;
+    transition: background-color 0.5s, color 0.5s;
 }
 
 a {
