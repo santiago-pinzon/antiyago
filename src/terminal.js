@@ -1,4 +1,5 @@
 import { marked } from 'marked';
+import {renderGrid} from "./conway.js"
 
 const commands = {
     echo: {fn: (args) => getEcho(args), help: "Print out text to the console. Usage: echo [text]"}, // TODO add html sanitization.https://github.com/cure53/DOMPurify
@@ -10,7 +11,8 @@ const commands = {
     ls: {fn: (args) => getFiles(args), help: "List the available directories. Usage: ls [dir]"},
     cd: {fn: (args) => getCD(args), help: "Move to a different directory. Usage: cd [path/to/dir]"},
     cat: {fn: (args) => getCat(args), help: "Display the contents of a file. Usage: cat [path/to/file]"},
-    theme: {fn: (args) => changeTheme(args), help: "Change the display theme. Usage: theme [dark, lite, retro]"}
+    theme: {fn: (args) => changeTheme(args), help: "Change the display theme. Usage: theme [dark, lite, retro]"},
+    conway: {fn: (args) => conway(args), help: "Open conway."}
 };
 
 export const themes = {
@@ -33,6 +35,10 @@ export function commandParser (input) {
         return output_div;
     }
 };
+
+function conway(args) {
+  renderGrid();
+}
 
 function changeTheme(args) {
   const theme_output = document.createElement('div');
